@@ -33,11 +33,11 @@
   <Style x:Key="NumericUpDown"
          TargetType="{x:Type prim:InputBase}">
     <Setter Property="Background"
-            Value="{DynamicResource {x:Static SystemColors.WindowBrushKey}}" />
+            Value="{DynamicResource InputBackground}" />
     <Setter Property="Foreground"
-            Value="{DynamicResource {x:Static SystemColors.WindowTextBrushKey}}" />
+            Value="{DynamicResource InputText}" />
     <Setter Property="BorderBrush"
-            Value="{DynamicResource {x:Static themes:ResourceKeys.ControlNormalBorderKey}}" />
+            Value="{DynamicResource InputBorder}" />
     <Setter Property="BorderThickness"
             Value="1" />
     <Setter Property="HorizontalContentAlignment"
@@ -95,7 +95,7 @@
             <Trigger Property="IsMouseOver"
                      Value="True">
               <Setter Property="BorderBrush"
-                      Value="{DynamicResource {x:Static themes:ResourceKeys.ControlMouseOverBorderKey}}" />
+                      Value="{DynamicResource InputBorderHover}" />
             </Trigger>
             <MultiDataTrigger>
               <MultiDataTrigger.Conditions>
@@ -122,7 +122,7 @@
             <Trigger Property="IsEnabled"
                      Value="False">
               <Setter Property="Foreground"
-                      Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}" />
+                      Value="{DynamicResource InputTextDisabled}" />
             </Trigger>
             <Trigger Property="IsFocused"
                      Value="True">

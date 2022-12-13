@@ -227,7 +227,7 @@
 
   <!-- PropertyGrid ComboBox Editors -->
   <Style TargetType="{x:Type editor:PropertyGridEditorComboBox}"
-         BasedOn="{StaticResource {x:Type ComboBox}}">
+         BasedOn="{StaticResource ResourceKey={x:Type ComboBox}}">
     <Style.Triggers>
       <MultiTrigger>
         <MultiTrigger.Conditions>
@@ -239,12 +239,12 @@
         <Setter Property="BorderBrush"
                 Value="Transparent" />
         <Setter Property="Background"
-                Value="Transparent" />
+                Value="{DynamicResource InputBackground}" />
       </MultiTrigger>
       <Trigger Property="IsEnabled"
                Value="False">
         <Setter Property="Foreground"
-                Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}" />
+                Value="{DynamicResource InputTextDisabled}" />
       </Trigger>
     </Style.Triggers>
   </Style>
@@ -666,7 +666,7 @@
     <Setter Property="Padding"
             Value="0" />
     <Setter Property="Background"
-            Value="#FFF0F0F0" />
+            Value="{DynamicResource WindowBackground}" />
     <Setter Property="Template">
       <Setter.Value>
         <ControlTemplate TargetType="{x:Type Expander}">
@@ -678,7 +678,7 @@
             </Grid.RowDefinitions>
             <Border x:Name="Border"
                     Background="{TemplateBinding Background}"
-                    BorderBrush="#FFF0F0F0">
+                    BorderBrush="{DynamicResource DataGridGridLines}">
               <ToggleButton Template="{StaticResource ExpanderToggleButton}"
                             IsChecked="{Binding Path=IsExpanded, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
                             OverridesDefaultStyle="True">
@@ -691,7 +691,7 @@
             <Border Visibility="Collapsed"
                     Grid.Row="1"
                     x:Name="ExpandSite"
-                    Background="{x:Static SystemColors.ControlBrush}"
+                    Background="{DynamicResource DataGridBackground}"
                     Padding="10 0 0 0">
               <Border BorderThickness="0"
                       Margin="0"
@@ -819,7 +819,7 @@
 
   <Style TargetType="{x:Type pg:PropertyItemBase}">
     <Setter Property="Background"
-            Value="{x:Static SystemColors.WindowBrush}" />
+            Value="{DynamicResource WindowBackground}" />
     <!-- Set the margin at 1 pixel bottom to let the horizontal "line" effect appear. -->
     <Setter Property="Margin"
             Value="0,0,0,1" />
@@ -882,7 +882,9 @@
                                          HorizontalAlignment="Stretch"
                                          VerticalAlignment="Center"
                                          TextTrimming="CharacterEllipsis"
-                                         IsEnabled="{Binding IsReadOnly, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=pg:PropertyGrid}, Converter={StaticResource InverseBoolConverter}}" >
+                                         IsEnabled="{Binding IsReadOnly, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=pg:PropertyGrid}, Converter={StaticResource InverseBoolConverter}}" 
+                                         Foreground="{DynamicResource DataGridCellForeground}">
+                                        
                       </pg:TrimmedTextBlock>
                   </Grid>
 
@@ -917,7 +919,10 @@
                 <ContentControl x:Name="PART_ValueContainer"
                                 Focusable="False"
                                 IsTabStop="False"
-                                VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
+                                VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                Foreground="{DynamicResource DataGridCellForeground}"
+                                Background="{TemplateBinding Background}">
+                  
                   <ContentControl.Content>
                     <MultiBinding Converter="{StaticResource PropertyItemEditorConverter}">
                       <Binding Path="Editor" 
@@ -973,22 +978,22 @@
                      Value="True">
               <Setter TargetName="PART_Name"
                       Property="Background"
-                      Value="{DynamicResource {x:Static themes:ResourceKeys.ButtonMouseOverBackgroundKey}}" />
+                      Value="{DynamicResource DataGridCellBackgroundHover}" />
             </Trigger>
             <Trigger Property="IsSelected"
                      Value="True">
               <Setter TargetName="PART_Name"
                       Property="Background"
-                      Value="{DynamicResource {x:Static themes:ResourceKeys.ButtonPressedBackgroundKey}}" />
+                      Value="{DynamicResource DataGridCellBackgroundSelected}" />
             </Trigger>
             <Trigger Property="IsEnabled"
                      Value="False">
               <Setter Property="Foreground"
                       TargetName="PART_ValueContainer"
-                      Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}" />
+                      Value="{DynamicResource ButtonTextDisabled}" />
               <Setter Property="Foreground"
                       TargetName="_text"
-                      Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}" />
+                      Value="{DynamicResource ButtonTextDisabled}" />
             </Trigger>
             <MultiDataTrigger>
               <MultiDataTrigger.Conditions>
@@ -1062,9 +1067,9 @@
     <Setter Property="AdvancedOptionsMenu"
             Value="{StaticResource {ComponentResourceKey TypeInTargetAssembly={x:Type pg:PropertyGrid}, ResourceId=SelectedObjectAdvancedOptionsMenu}}" />
     <Setter Property="Background"
-            Value="{DynamicResource {x:Static themes:ResourceKeys.ButtonNormalBackgroundKey}}" />
+            Value="{DynamicResource DataGridBackground}" />
     <Setter Property="BorderBrush"
-            Value="{DynamicResource {x:Static themes:ResourceKeys.ControlNormalBorderKey}}" />
+            Value="{DynamicResource DataGridGridLines}" />
     <Setter Property="BorderThickness"
             Value="1" />
     <Setter Property="SelectedObjectType"
@@ -1208,13 +1213,14 @@
               </Grid>
 
               <Grid Grid.Row="2"
-                    Background="{x:Static SystemColors.WindowBrush}">
+                    Background="{DynamicResource DataGridBackground}">
                 <pg:PropertyItemsControl x:Name="PART_PropertyItemsControl"
                                          IsTabStop="False"
                                          Focusable="False"
                                          ItemsSource="{Binding Properties, RelativeSource={RelativeSource TemplatedParent}}"
                                          ItemContainerStyle="{Binding PropertyContainerStyle, RelativeSource={RelativeSource TemplatedParent}}"
-                                         Background="{x:Static SystemColors.ControlBrush}"
+                                         Background="{TemplateBinding Background}"
+                                         Foreground="{DynamicResource DataGridCellForeground}"
                                          VirtualizingStackPanel.IsVirtualizing="{Binding IsVirtualizing, RelativeSource={RelativeSource TemplatedParent}}"
                                          VirtualizingStackPanel.VirtualizationMode="Recycling"
                                          ScrollViewer.CanContentScroll="True"
